@@ -12,7 +12,7 @@
 ### npm script
 
 ``` bash
-npm run create-page       # 创建page
+npm run create-page       # 创建 page
 
 npm run create-component  # 创建 component
 
