@@ -1,0 +1,2 @@
+<wxs src="../../wxs/tools.wxs" module="tools" />
+<view>{{title}}</view>

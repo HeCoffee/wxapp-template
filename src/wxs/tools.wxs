@@ -1,0 +1,51 @@
+function formatStatus (status) {
+  const obj = {
+    title: '',
+    desc: '',
+    isActive: false
+  }
+  switch (status) {
+    case 'To be used':
+      obj.title = '待使用'
+      obj.desc = '您的演出门票已生成，祝你观演愉快！'
+      obj.isActive = true
+      break
+    case 'PayFail':
+      obj.title = '支付失败'
+      obj.desc = '您的订单支付失败，请重新下单'
+      obj.isActive = false
+      break
+    case 'To be paid':
+      obj.title = '未支付'
+      obj.desc = '您的订单未支付，请尽快支付'
+      obj.isActive = false
+      break
+    case 'Refunding':
+      obj.title = '退款中'
+      obj.desc = '您的订单已进入退款流程，请耐心等待哦！'
+      obj.isActive = false
+      break
+    case 'Refunded':
+      obj.title = '已退款'
+      obj.desc = '您的订单已成功退款，欢迎再次订票哦！'
+      obj.isActive = false
+      break
+    case 'Cancelled':
+      obj.title = '已取消'
+      obj.desc = '您的订单已取消，欢迎再次订票哦！'
+      obj.isActive = false
+      break
+    case 'Finished':
+      obj.title = '已完成'
+      obj.desc = '您的订单已结束，感谢您的支持！'
+      obj.isActive = true
+      break
+    default:
+      obj.title = '未定义'
+      obj.desc = '您的订单状态未定义，请咨询客服！'
+      obj.isActive = true
+      break
+  }
+  return obj
+}
+module.exports = { formatStatus: formatStatus };

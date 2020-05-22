@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/Home/index",
+    "pages/Mine/index"
+  ],
+  "subPackages": [],
+  "usingComponents": {},
+  "window": {
+    "navigationBarTitleText": "小程序模板",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#000000",
+    "selectedColor": "#e0b008",
+    "color": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "iconPath": "./images/footer/home.png",
+        "selectedIconPath": "./images/footer/home1.png",
+        "pagePath": "pages/Home/index",
+        "text": "首页"
+      },
+      {
+        "iconPath": "./images/footer/mine.png",
+        "selectedIconPath": "./images/footer/mine1.png",
+        "pagePath": "pages/Mine/index",
+        "text": "我的"
+      }
+  ]}
+}
