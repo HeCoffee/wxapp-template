@@ -14,9 +14,7 @@ App({
     this.options = options
     this.clearOldSession()
     try {
-      const tokenInfo = await this.checkToken()
-      this.globalData.header.Authorization = this.globalData.authorizationPrefix + tokenInfo.token
-      this.globalData.tokenInfo = tokenInfo
+      await this.checkToken()
     } catch (err) {
       console.log('app 捕捉err登陆全部', err)
       this.hideLoading()
@@ -56,12 +54,8 @@ App({
       wx.setStorageSync(`${storageKey}-version`, version);
     }
   },
-  // 检查token 是否过期 是否需要重新登录
-  async checkToken () {
-    const token = wx.getStorageSync(storageKey)
-    // 提前一小时过期
-    if (token && token.expires_in - 3600 * 1000 > Date.now()) return token
-    // 登录
+  // 登录
+  async getToken () {
     const wxRes = await wxp.login()
     const data = {
       code: wxRes.code,
@@ -74,27 +68,23 @@ App({
     wx.setStorageSync(storageKey, tokenInfo)
     return tokenInfo
   },
-  // 用iv和encryptedData解密用户信息前
-  // 需要检查一次 session 是否有效 无效则更新
-  async updateToken () {
-    // try {
-    // 	const res = await wxp.checkSession()
-    //   console.log('session invalid>>>', res)
-    // } catch (e) {
-    // 	console.log('session invalid>>>', e)
-    // }
-    // 强制刷新
-    // 登录
-    const wxRes = await wxp.login()
-    const data = {
-      code: wxRes.code,
-      app_id: this.globalData.appid
+  // 检查token 是否过期 是否需要重新登录
+  async checkToken () {
+    let tokenInfo = wx.getStorageSync(storageKey)
+    // 提前2小时过期
+    if (!tokenInfo || tokenInfo.expires_in - 2 * 3600 * 1000 < Date.now()) {
+      tokenInfo = await this.getToken()
     }
-    const loginRes = await this.post(loginUrl, data)
-    if (loginRes.code !== 0) throw new Error(loginRes.msg)
-    const tokenInfo = loginRes.data
-    tokenInfo.expires_in = tokenInfo.expires_in * 1000 + Date.now()
-    wx.setStorageSync(storageKey, tokenInfo)
+    this.globalData.header.Authorization = this.globalData.authorizationPrefix + tokenInfo.token
+    this.globalData.tokenInfo = tokenInfo
+    return true
+  },
+  // 用iv和encryptedData解密用户信息前
+  // 需要强制刷新登录状态以及session 否则容易解密失败
+  async updateToken () {
+    // 强制刷新登录状态
+    // checkSession校验效果有概率出现无效 所以强制
+    const tokenInfo = await this.getToken()
     this.globalData.header.Authorization = this.globalData.authorizationPrefix + tokenInfo.token
     this.globalData.tokenInfo = tokenInfo
     return true
@@ -151,14 +141,32 @@ App({
     })
   },
 
+  // 统一封装http请求
   async http (url, data = {}, exHeader = {}, method) {
-    const header = await this.getHttpHeader(url, exHeader)
-    const res = await wxp.request({
-      url: this.globalData.httpUrl + url,
-      method,
-      data,
-      header
-    })
+    let header = await this.getHttpHeader(url, exHeader)
+    let res = {}
+    const that = this
+    async function httpFn () {
+      res = await wxp.request({
+        url: that.globalData.httpUrl + url,
+        method,
+        data,
+        header
+      })
+    }
+    try {
+      await httpFn()
+      if (res.statusCode !== 200) throw new Error(res.statusCode)
+    } catch (e) {
+      console.log('http err >>>>', e.message, res)
+      // 统一处理错误请求
+      if (parseInt(e.message) === 401) {
+        // token过期 更新token 并且重新请求
+        await this.updateToken()
+        header = await this.getHttpHeader(url, exHeader)
+        await httpFn()
+      }
+    }
     return res.data
   },
 
