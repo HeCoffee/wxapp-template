@@ -15,10 +15,12 @@
 
 开发者工具导入项目目录
 
+> dev/build后生成该目录
+
 ## env
 
-环境变量配置目录 支持.env.js(json)后缀文件
-开发时通过process.env获取环境变量
+环境变量配置目录 支持**.env.(js|json)**后缀文件
+开发时通过**process.env**获取环境变量
 
 ``` js
 // app.js
@@ -27,7 +29,7 @@ globalData: {
     httpUrl: process.env.BASE_API
 }
 ```
-若需要增加环境变量以及npm指令参考 npm run dev 或 npm run build进行配置
+**若需要增加环境变量以及npm指令参考 npm run dev 或 npm run build进行配置**
 
 # npm script
 
@@ -50,26 +52,26 @@ npm run fix               # 修复有误代码风格
 - 支持引用 `node_modules` 模块
 - 通过 `babel` 支持更丰富的 `ES6` 兼容，包括 `async/await`
 - 使用 `less` 编写 `.wxss` 文件
+- 支持 [custom-tab-bar](https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html) 、[插件](https://developers.weixin.qq.com/miniprogram/dev/framework/plugin/)
 
 > 若需要scss 改变loader配置 并且安装依赖包
 
 # UI组件引用
 
-推荐UI组件库
+### 推荐UI组件库
 
 - [Vant Weapp](https://github.com/youzan/vant-weapp)
 - [Wux Weapp](https://github.com/wux-weapp/wux-weapp)
 - [WeUI](https://github.com/wechat-miniprogram/weui-miniprogram)
 
-引用方式：
+###  引用方式：
 
-1.到UI库的GitHub地址上下载已构建好的components按需放到src的components文件夹。如:Vant、Wux
+1. 到UI库的GitHub地址上下载已构建好的components按需放到src的components文件夹。如:Vant、Wux
+2. 到UI库的GitHub地址上下载项目，本地构建components再按需放到src的components文件夹中。如:WeUI
 
-2.到UI库的GitHub地址上下载项目，本地构建components再按需放到src的components文件夹中。如:WeUI
+**注意json文件配置**
 
-**注意配置好json文件**
-
-***暂不支持直接安装到npm的安装方式***
+***不支持直接npm的安装方式***
 
 # 代码风格
 
