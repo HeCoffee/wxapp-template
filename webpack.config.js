@@ -4,7 +4,7 @@
 
 const { resolve } = require('path')
 const fs = require('fs')
-//
+
 const {
   DefinePlugin
 } = require('webpack')
@@ -21,11 +21,11 @@ const srcDir = resolve('src')
 // 引入环境常量 支持 js/json
 const envFiles = fs.readdirSync('./env')
 const envFileType = /\.env\.(js|json)$/i
-let envObj = {}
+const envObj = {}
 
 envFiles.forEach((fileName) => {
   if (!envFileType.test(fileName)) return false
-  let key = fileName.split(envFileType)[0]
+  const key = fileName.split(envFileType)[0]
   envObj[key] = require(`./env/${fileName}`)
 })
 
@@ -36,7 +36,7 @@ const relativeFileLoader = (ext = '[ext]', esModule = false) => {
       esModule,
       useRelativePath: false,
       name: `[path][name].${ext}`,
-      context: srcDir,
+      context: srcDir
     }
   }
 }
@@ -49,10 +49,10 @@ module.exports = (env) => {
     },
     output: {
       filename: '[name].js',
-        publicPath: '/',
-        path: resolve('dist')
+      publicPath: '/',
+      path: resolve('dist')
     },
-    target: Targets['Wechat'],
+    target: Targets.Wechat,
     module: {
       rules: [
         {
@@ -63,7 +63,7 @@ module.exports = (env) => {
             'babel-loader',
             'eslint-loader',
             'source-map-loader'
-          ],
+          ]
         },
         {
           test: /\.wxs$/,
@@ -73,7 +73,7 @@ module.exports = (env) => {
             relativeFileLoader(),
             'babel-loader',
             'eslint-loader'
-          ],
+          ]
         },
         {
           test: /\.(less|wxss)$/,
@@ -82,16 +82,16 @@ module.exports = (env) => {
             relativeFileLoader('wxss'),
             {
               loader: 'less-loader'
-            },
-          ],
+            }
+          ]
         },
         {
           test: /\.(png|jpg|gif|json$)$/,
           include: /src/,
           type: 'javascript/auto',
           use: [
-            relativeFileLoader(),
-          ],
+            relativeFileLoader()
+          ]
         },
         {
           test: /\.wxml$/,
@@ -102,11 +102,11 @@ module.exports = (env) => {
               loader: 'wxml-loader',
               options: {
                 root: srcDir,
-                enforceRelativePath: true,
-              },
-            },
-          ],
-        },
+                enforceRelativePath: true
+              }
+            }
+          ]
+        }
         // 全page添加全局组件
         // {
         //   test: /\.(wxml|axml)$/,
@@ -127,7 +127,7 @@ module.exports = (env) => {
         'process.env': JSON.stringify(envObj[env])
       }),
       new WXAppWebpackPlugin({
-        clear: !isDev,
+        clear: !isDev
       }),
       // 将src中images文件夹整个复制
       new CopyPlugin({
@@ -138,27 +138,27 @@ module.exports = (env) => {
             context: srcDir
           }
         ]
-      }),
+      })
     ],
     devtool: isDev ? 'source-map' : false,
     resolve: {
       alias: {
-        '@': resolve('src'),
+        '@': resolve('src')
       },
-      modules: [resolve(__dirname, 'src'), 'node_modules'],
+      modules: [resolve(__dirname, 'src'), 'node_modules']
     },
     optimization: {
       minimize: true,
-        minimizer: [
+      minimizer: [
         new TerserPlugin({
           test: /\.js(\?.*)?$/i
         })
-      ],
+      ]
     },
     watchOptions: {
       poll: 1000, // 监测修改的时间(ms)
-        ignored: /dist|node_modules/,
-        aggregateTimeout: 300,
-    },
+      ignored: /dist|node_modules/,
+      aggregateTimeout: 300
+    }
   }
 }
