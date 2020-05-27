@@ -65,13 +65,20 @@ module.exports = (env) => {
             'source-map-loader'
           ]
         },
+        // wxs 需要转换所有es15
         {
           test: /\.wxs$/,
           include: /src/,
           exclude: /node_modules/,
           use: [
             relativeFileLoader(),
-            'babel-loader',
+            {
+              loader: 'babel-loader',
+              options: {
+                babelrc: false,
+                presets: ['@babel/preset-env']
+              }
+            },
             'eslint-loader'
           ]
         },

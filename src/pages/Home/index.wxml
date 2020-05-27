@@ -1,2 +1,5 @@
 <wxs src="../../wxs/tools.wxs" module="tools" />
+
 <view>{{title}}</view>
+
+<view>{{tools.formatDate(day)}}</view>

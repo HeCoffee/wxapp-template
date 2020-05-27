@@ -29,10 +29,18 @@
 // app.js
 ...
 globalData: {
-    httpUrl: process.env.BASE_API
+  baseUrl: process.env.BASE_URL
 }
 ```
 **若需要增加环境变量以及npm指令参考 npm run dev 或 npm run build进行配置**
+
+## src
+
+开发目录
+
+> app.js中封装了一些方法 和 登录逻辑，不需要可直接删除
+>
+> wx api promise化，通过app.globalData.wxp访问 fail事件 会直接 throw err
 
 # npm script
 
@@ -77,9 +85,12 @@ npm run fix               # 修复有误代码风格
 ***不支持直接npm的安装方式***
 
 # 代码风格
-
 - [eslint](https://github.com/eslint/eslint) | [中文文档](https://cn.eslint.org/)
 - [standard](https://github.com/feross/standard) | [中文文档](https://standardjs.com/readme-zhcn.html)
+
+> 不习惯某些规则可以在.eslintrc.js中禁用
+> 引入UI组件时通常会报代码风格错误，将文件夹路径加到.eslintignore中即可忽略检查
+> 实在不喜eslint 将 webpack配置中的eslint-loader注释即可
 
 # 相关项目
 

@@ -5,7 +5,7 @@ module.exports = {
       {
         loose: true,
         targets: {
-          browsers: "current node"
+          browsers: 'current node'
         }
       }
     ]
@@ -14,8 +14,8 @@ module.exports = {
     [
       '@babel/plugin-transform-runtime',
       {
-        'helpers': false,
-        'regenerator': true
+        helpers: false,
+        regenerator: true
       }
     ]
   ]

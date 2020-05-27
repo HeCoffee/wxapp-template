@@ -10,7 +10,7 @@ promisifyAll(wx, wxp)
 
 App({
   async onLaunch (options) {
-    console.log(`version: ${version}-${process.env.NODE_ENV}`)
+    console.log(`version: ${version}-${process.env.APP_ENV}`)
     this.options = options
     this.clearOldSession()
     try {
@@ -148,7 +148,7 @@ App({
     const that = this
     async function httpFn () {
       res = await wxp.request({
-        url: that.globalData.httpUrl + url,
+        url: that.globalData.baseUrl + url,
         method,
         data,
         header
@@ -193,7 +193,7 @@ App({
   globalData: {
     wxp,
     appid: 'wxd47cc15e945e6372',
-    httpUrl: process.env.BASE_API,
+    baseUrl: process.env.BASE_URL,
     tokenInfo: {},
     authorizationPrefix: 'Bearer ',
     header: {

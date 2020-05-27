@@ -1,6 +1,6 @@
 'use strict'
 
 module.exports = {
-  NODE_ENV: 'development',
-  BASE_API: 'https://cds-dev.wechatify.net/api/tmg_addon/wxapp_cds'
+  APP_ENV: 'development',
+  BASE_URL: 'https://cds-dev.wechatify.net/api/tmg_addon/wxapp_cds'
 }
