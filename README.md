@@ -89,7 +89,9 @@ npm run fix               # 修复有误代码风格
 - [standard](https://github.com/feross/standard) | [中文文档](https://standardjs.com/readme-zhcn.html)
 
 > 不习惯某些规则可以在.eslintrc.js中禁用
+>
 > 引入UI组件时通常会报代码风格错误，将文件夹路径加到.eslintignore中即可忽略检查
+>
 > 实在不喜eslint 将 webpack配置中的eslint-loader注释即可
 
 # 相关项目
