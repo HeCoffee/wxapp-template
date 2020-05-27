@@ -57,6 +57,7 @@ npm run lint              # 代码风格检测
 
 npm run fix               # 修复有误代码风格
 ```
+> 开发模式时 src中的文件夹删除或者改名后，建议将dist文件夹清空再run dev或者run build后再run dev
 
 # 功能
 
