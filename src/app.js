@@ -192,7 +192,7 @@ App({
 
   globalData: {
     wxp,
-    appid: 'wxd47cc15e945e6372',
+    appid: '',
     baseUrl: process.env.BASE_URL,
     tokenInfo: {},
     authorizationPrefix: 'Bearer ',
