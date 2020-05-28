@@ -10,8 +10,9 @@ const {
 } = require('webpack')
 
 const { Targets } = require('wxapp-webpack4-plugin')
-const WXAppWebpackPlugin = require('./webpack-plugin/wxapp-components-plugin').default
-// const WXAppWebpackPlugin = require('wxapp-webpack-plugin').default
+// const WXAppWebpackPlugin = require('wxapp-webpack4-plugin').default
+// wxapp-webpack4-plugin 不支持部分功能，如：全局components custom-tab-bar 所以在其基础上修改了部分代码
+const WXAppWebpackPlugin = require('./webpack-plugin/wxapp-webpack4-plugin-myself').default
 
 const CopyPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')

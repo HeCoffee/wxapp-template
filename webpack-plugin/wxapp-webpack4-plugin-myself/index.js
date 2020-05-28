@@ -340,7 +340,7 @@ exports.default = class WXAppPlugin {
       entryResources
     } = this;
     compiler.hooks.compilation.tap('compilation', (compilation) => {
-      compilation.hooks.buildModule.tap('before-chunk-assets', () => {
+      compilation.hooks.beforeChunkAssets.tap('before-chunk-assets', () => {
         const assetsChunkIndex = compilation.chunks.findIndex(
           ({ name }) => name === assetsChunkName
         );
@@ -427,7 +427,7 @@ exports.default = class WXAppPlugin {
     const { commonModuleName } = this.options;
     const { target } = compilation.options;
     const commonChunkName = stripExt(commonModuleName);
-    const globalVar = 'global';
+    const globalVar = target.name === 'Alipay' ? 'my' : 'wx';
     const template = [];
     for (const k in compilation) {
       template.push(k);
@@ -435,7 +435,7 @@ exports.default = class WXAppPlugin {
     // console.log(template);
 
     // inject chunk entries
-    compilation.mainTemplate.hooks.render.tap('renderJs', (core, { name }) => {
+    compilation.chunkTemplate.hooks.render.tap('renderJs', (core, { name }) => {
       if (this.entryResources.indexOf(name) >= 0) {
         const relativePath = relative(dirname(name), `./${commonModuleName}`);
         const posixPath = relativePath.replace(/\\/g, '/');
@@ -483,29 +483,5 @@ exports.default = class WXAppPlugin {
     this.compileScripts(compiler);
     await this.compileAssets(compiler);
     callback();
-  }
-
-  async fileDisplay (filePath, callback) {
-    // 根据文件路径读取文件，返回文件列表
-    const files = await readdir(filePath);
-    var blogList = [];
-    if (files && files.length) {
-      for (const filename of files) {
-        const filedir = join(filePath, filename);
-        // 根据文件路径获取文件信息，返回一个stat对象
-        const stats = await stat(filedir);
-        const isFile = stats.isFile(); // 是文件
-        const isDir = stats.isDirectory(); // 是文件夹
-        if (isFile) {
-          if (filedir) {
-            callback(filedir);
-          }
-        }
-        if (isDir) {
-          await this.fileDisplay(filedir, callback); // 递归，如果是文件夹，就继续遍历该文件夹下面的文件
-        }
-      }
-    }
-    return blogList;
   }
 }
