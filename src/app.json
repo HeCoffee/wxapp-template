@@ -4,7 +4,9 @@
     "pages/Mine/index"
   ],
   "subPackages": [],
-  "usingComponents": {},
+  "usingComponents": {
+    "vant-button": "components/vant/lib/button/index"
+  },
   "tabBar": {
     "backgroundColor": "#000000",
     "selectedColor": "#e0b008",

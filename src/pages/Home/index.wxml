@@ -3,3 +3,5 @@
 <view>{{title}}</view>
 
 <view>{{tools.formatDate(day)}}</view>
+
+<vant-button type="primary">首页</vant-button>

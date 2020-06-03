@@ -1,7 +1,3 @@
-// 考虑用不用
-// 命令行工具 rimraf cross-env
-// webpack插件 source-map-loader
-
 const { resolve } = require('path')
 const fs = require('fs')
 
@@ -72,7 +68,7 @@ module.exports = (env) => {
           include: /src/,
           exclude: /node_modules/,
           use: [
-            relativeFileLoader(),
+            relativeFileLoader('wxs'),
             {
               loader: 'babel-loader',
               options: {
@@ -143,6 +139,11 @@ module.exports = (env) => {
           {
             from: 'images',
             to: 'images',
+            context: srcDir
+          },
+          {
+            from: 'sitemap.json',
+            to: 'sitemap.json',
             context: srcDir
           }
         ]

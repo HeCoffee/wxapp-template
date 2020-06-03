@@ -101,4 +101,47 @@ npm run fix               # 修复有误代码风格
 - [wxapp-boilerplate](https://github.com/cantonjs/wxapp-boilerplate)
 - [min-program-webpack](https://github.com/XLinzexin/min-program-webpack)
 
+# 注意事项
+
+1. 第一次构建或者run build指令，部分版本开发者工具不会自动加入`project.config.json`，然后无法运行。
+
+解决方式：开发者工具  详情->本地设置  勾选任意一项再取消即可
+
+2. 关于引入UI组件 **wxss** 和 **wxs** 问题
+
+有的组件会引入公共wxss，但是less-loader无法识别.wxss文件的引入需要在原来的wxss文件加入标识便于识别，或者改为less文件后缀。建议加入标识解决。
+
+```less
+// 原本wxss
+@import '../common/index.wxss';
+
+// 添加标识
+@import (reference, optional, less) '../common/index.wxss';
+@import (css) '../common/index.wxss';
+```
+
+> 可参考src/components/vant/lib/button/index.wxss
+
+部分wxs使用引入公共wxs，同样不被识别，需要将引入的代码写入wxs
+
+```js
+// 原wxs
+var formate = require('./date.wxs').formate;
+
+module.exports = {
+   formate
+}
+
+// 改动
+function formate (val) {
+  return val * 100
+};
+
+module.exports = {
+   formate
+}
+```
+
+> 可参考src/components/vant/lib/wxs/utils.wxs
+
 > 持续完善ing......

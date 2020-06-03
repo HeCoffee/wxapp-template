@@ -5,8 +5,8 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "create-page": "create-wxapp-page --type=page --dir=src --indent=tab --style=less",
-    "create-component": "create-wxapp-page --type=component --dir=src --indent=tab --style=less",
+    "create-page": "create-wxapp-page --type page --dir src --indent 2 --style less",
+    "create-component": "create-wxapp-page --type component --dir src --indent 2 --style less",
     "dev": "webpack --watch --progress --mode development --env dev",
     "build": "webpack --mode production --env prod",
     "lint": "eslint --ext .js --ext .wxs src/",
@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.6",
+    "@vant/weapp": "^1.3.1",
     "miniprogram-api-promise": "^1.0.4"
   }
 }

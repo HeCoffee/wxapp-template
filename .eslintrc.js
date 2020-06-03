@@ -31,6 +31,8 @@ module.exports = {
     'no-prototype-builtins': 0,
     'no-mixed-operators': 0,
     'camelcase': 0,
-    'quote-props': 1
+    'quote-props': 1,
+    'space-before-function-paren': 1,
+    'comma-dangle': 0
   }
 }
