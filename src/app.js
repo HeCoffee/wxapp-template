@@ -65,14 +65,15 @@ App({
     if (loginRes.code !== 0) throw new Error(loginRes.msg)
     const tokenInfo = loginRes.data
     tokenInfo.expires_in = tokenInfo.expires_in * 1000 + Date.now()
+    tokenInfo.env = process.env.APP_ENV
     wx.setStorageSync(storageKey, tokenInfo)
     return tokenInfo
   },
   // 检查token 是否过期 是否需要重新登录
   async checkToken () {
     let tokenInfo = wx.getStorageSync(storageKey)
-    // 提前2小时过期
-    if (!tokenInfo || tokenInfo.expires_in - 2 * 3600 * 1000 < Date.now()) {
+    // 提前2小时过期 并且检测 token 环境
+    if (!tokenInfo || tokenInfo.expires_in - 2 * 3600 * 1000 < Date.now() || tokenInfo.env !== process.env.APP_ENV) {
       tokenInfo = await this.getToken()
     }
     this.globalData.header.Authorization = this.globalData.authorizationPrefix + tokenInfo.token
