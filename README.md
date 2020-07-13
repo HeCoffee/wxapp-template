@@ -118,9 +118,10 @@ npm run fix               # 修复有误代码风格
 // 添加标识
 @import (reference, optional, less) '../common/index.wxss';
 @import (css) '../common/index.wxss';
+// 若多个文件皆引入同一个文件，那么只要其中一个文件写入这两句，其他文件只要写入@import (css) '**'这句即可
 ```
 
-> 可参考src/components/vant/lib/button/index.wxss
+> 可参考src/components/vant/lib/button/index.wxss、src/components/vant/lib/icon/index.wxss
 
 部分wxs使用引入公共wxs，同样不被识别，需要将引入的代码写入wxs
 
