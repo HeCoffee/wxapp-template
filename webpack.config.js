@@ -90,7 +90,7 @@ module.exports = (env) => {
           ]
         },
         {
-          test: /\.(png|jpg|gif|json$)$/,
+          test: /\.(png|jpg|gif|svg|json$)$/,
           include: /src/,
           type: 'javascript/auto',
           use: [
