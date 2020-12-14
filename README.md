@@ -17,6 +17,8 @@
 
 > dev/build后生成该目录
 
+// `TODO:` [project.config.json](https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html)
+
 ## env
 
 环境变量配置目录
